@@ -13,8 +13,6 @@
 #endif
 
 unsigned short x;
-unsigned const char MAX = 0x3FF; 
-// around the 9s mark of my lab 2 demo vid, all of the lights were turned on
 
 void ADC_init() {
 	ADCSRA |= (1 << ADEN) |(1 << ADSC) | (1 << ADATE);
@@ -32,16 +30,8 @@ int main(void) {
 	ADC_init();
 	while (1) {
 		x = ADC;
-		if (x >= (MAX / 2)) {
-			PORTB = 0x01;
-			PORTD = 0x00;
-//			PORTB = (char)x; //lower 8 bits
-//			PORTD = (char)(x >> 4); //higher 8 bits
-		}
-		else { 
-			PORTB = 0x00;
-			PORTD = 0x00;
-		}
+		PORTB = (char)x; //lower 8 bits
+		PORTD = (char)(x >> 4); //higher 8 bits
 	}
     return 1;
 }
